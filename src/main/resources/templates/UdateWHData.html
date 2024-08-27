@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card-header bg-primary  text-center">
+        	
+            <h1>WHUser Update  Page</h1>
+        	
+        </div>
+        <div class="card-body" >
+        	
+            <form action="/user/save"  method="post" id="userRegForm">
+                <div class="row">
+                    <div class="col-2">
+                        <label>User Id</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" name="usr_Id" id="usr_Id"  th:value="${whUserTypeById.usr_Id}" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                        <span id="usr_IdError">Error</span>
+                    </div>
+                    </div>
+                
+                <div class="row">
+                <div class="col-2">
+                    <label>User TYpe</label>
+                </div>
+                <div class="col-5">
+                    <input type="radio" name="usr_Type" id="usr_Type1"  th:value="${whUserTypeById.usr_Type}" checked="checked"/>Vendor
+                    <input type="radio" name="usr_Type" id="usr_Type2"  th:value="${whUserTypeById.usr_Type}" checked="checked"/>Customer
+                </div>
+                    <div class="col-5">
+                    <span id="usr_TypeError">Error</span>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label>User Code</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" name="usr_Code" id="usr_Code"  th:value="${whUserTypeById.usr_Code}" class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                        <span id="usr_CodeError">Error</span>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <label>User For</label>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" name="usr_For" id="usr_For"  th:value="${whUserTypeById.usr_For}" readonly class="form-control"/>
+                        </div>
+                        <div class="col-5">
+                            <span id="usr_ForError">Error</span>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <label>User Email</label>
+                            </div>
+                            <div class="col-5">
+                                <input type="text" name="usr_Email" id="usr_Email" th:value="${whUserTypeById.usr_Email}" class="form-control"/>
+                                   
+                                    
+                                </div>
+                            <div class="col-5">
+                                <span id="usr_EmailError">Error</span>
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-2">
+                                <label>User Cont</label>
+                            </div>
+                            <div class="col-5">
+                                <input type="text" name="usr_Cont" id="usr_Cont" th:value="${whUserTypeById.usr_Cont}" class="form-control"/>
+                                
+                                </div>
+                            <div class="col-5">
+                                <span id="usr_ContError">Error</span>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <label>User Identity  Type </label>
+                                </div>
+                                <div class="col-5">
+                                    <select  name="usr_Id_Type" id="usr_Id_Type">
+                                   <option  value="${whUserTypeById.usr_Id_Type}">Pan</option>
+                                        <option value="Select">Select</option>
+                                          <option value="Aadhar">Aadhar Card</option>
+                                        <option value="VoterId">VoterId Card</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    
+                                        </div>
+                                      
+                                    
+
+                                <div class="col-5">
+                                    <span id="usr_Id_TypeError">Error</span>
+                                </div>
+                                </div>
+                                <div class="row" id="userifother">
+                                    <div class="col-2" >
+                                        <label>User If Other </label>
+                                    </div>
+                                    <div class="col-5" id="userIdTYpe">
+                                        <input type="text" name="usr_If_Other"  th:value="${whUserTypeById.usr_If_Other}" id="usr_If_Other"  class="form-control"/>
+                                    
+                                        </div>
+                                        
+                                    <div class="col-5" >
+                                        <span id="usr_If_OtherError">Error</span>
+                                    </div>
+                                    </div>
+                                    <div class="row" id="idnumber">
+                                        <div class="col-2" id="useridnumber">
+                                            <label>User ID Number </label>
+                                        </div>
+                                        <div class="col-5" id="userIdTYpe">
+                                            <input type="text" name="usr_Id_Number" th:value="${whUserTypeById.usr_Id_Number}" id="usr_Id_Number" class="form-control"/>
+                                        
+                                            </div>
+
+                                        <div class="col-5">
+                                            <span id="usr_Id_NumberError">Error</span>
+                                        </div>
+                                        </div>
+                            
+                       
+                            <input type="submit" value="submit" class="btn btn-success"
+                               />
+        
+                        </form>
+                            </div>
+                        <div class="card-footer alert alert-info" th:if="${saveUser!=null}">
+						<span th:text="${saveUser}"></span>
+                        </div>
+                     </div>
+                     </div>
+                     
+                     
+             <script>
+ $(document).ready(function(){
+                    function usrType(){
+                        
+                    var val=$('[name="usr_Type"]:checked').val();
+                    if(val=='Vendor'){
+                    	
+                    	 $("#usr_For").val('Vendor');
+                        $("#usr_For").val('Purchase');
+                    }
+                    else{
+                       
+                        $("#usr_For").val('Sale'); 
+                    }
+                 
+                    }
+               
+                 $('[name="usr_Type"]').click(function (){
+
+                    usrType();
+                  })  
+                       
+                  $("#usr_Id_Type").change(function(){
+                    var val=$("#usr_Id_Type").val();
+                    if(val!='Other'){
+                        $("#userifother").hide();
+                        $("#idnumber").show(); 
+                        if(val=='Select'){
+                            $("#userifother").show();
+                        } 
+                    }
+                    
+                    else{
+                       
+                       
+                        $("#userifother").show(); 
+                        $("#idnumber").hide(); }  
+                    
+                   
+                  })
+            });
+
+             </script>
+</body>
+</html>

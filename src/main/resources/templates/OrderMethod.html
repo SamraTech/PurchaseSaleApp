@@ -1,0 +1,251 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+</head>
+<body>
+ <div class="container">
+    <div class="card">
+        <div class="card-header bg-primary text-center">
+         <h1>Order Method Page</h1>   
+
+    </div>
+    <div class="card-body">
+        <form action="/ordermethod/save" method="post" id="ordermethodform">
+            <div class="row">
+            <div class="col-2">
+                <label>Mode</label>
+                </div>
+                <div class="col-5">
+                <input type="radio" name="order_Mode" id="omode1" value="Sale"/>Sale
+                <input type="radio" name="order_Mode" id="omode2" value="Purchase"/>Purchase
+            </div>  
+            <div class="col-5">
+               <span id="modeError">Error</span>
+            </div>  
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label>Order Code</label>
+                </div>
+                <div class="col-5">
+               
+                <input type="text" name="order_Code" id="ordercode"/>
+            </div>  
+            <div class="col-5">
+               <span id="ordercodeError">Error</span>
+            </div>  
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <label>Order Method</label>
+                </div>
+                <div class="col-5">
+              <select name="order_Method" id="ordermethod">
+                <option value="">Select</option>
+                <option value="FIFO">FIFO</option>
+                <option value="FIFE">FIFE</option>
+                <option value="LIFO">LIFO</option>
+               </select>
+            </div>  
+            <div class="col-5">
+               <span id="ordermethodError">Error</span>
+            </div>  
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <label>OrderAccept</label>
+                </div>
+                <div class="col-5">
+              
+                <input type="checkbox" name="order_Accept" id="orderacceptreturn"  value="Accept-Return"/>Accept Return
+                <input type="checkbox" name="order_Accept" id="orderacceptmulti"  value="Mutli-Model"/>Mutli Model
+            </div>  
+            <div class="col-5">
+               <span id="orderacceptError">Error</span>
+            </div>  
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label>Order Descrp</label>
+                </div>
+                <div class="col-5">
+              
+                <input type="text" name="order_Descrp" id="orderdecrp" />
+            </div>  
+            <div class="col-5">
+               <span id="orderdecrpError">Error</span>
+            </div>  
+        </div>   
+         <input type="submit" value="submit" class="btn btn-success"/>
+        </form>
+        </div>
+        <div class="card-footer bg-primary text-center" th:if="${saveOrder!=null}">
+        <span th:text="${saveOrder}"></span></div>
+        </div>
+    </div>   
+    <script>
+        $(document).ready(function(){
+            var ordermode=false;
+            var ordermethod=false;
+            var orderAccept=false;
+            var ordercodeError=false;
+            var orderdecrp=false;
+            $("#modeError").hide();
+            $("#ordermethodError").hide();
+            $("#orderacceptError").hide();
+            $("#ordercodeError").hide();
+            
+            $("#orderdecrpError").hide();
+            function orderMode(){
+                var val=$('[name="order_Mode"]:checked').length;
+          if(val==0){
+            $("#modeError").show();
+            
+            $("#modeError").html('could not be blank');
+            $("#modeError").css('color','red');
+            ordermode=false;
+          }
+          else{
+            alert(val);
+            $("#modeError").hide();
+            ordermode=true;
+            
+          }
+          return ordermode;
+
+            }
+             function orderMethodAccept(){
+              //var val=new val[2];
+                var val=$('[name="order_Accept"]:checked').length;
+                 //var val=$('[name="order_Accept"]:checked').val();
+                
+          if(val==0){
+            $("#orderacceptError").show();
+            
+            $("#orderacceptError").html('could not be blank');
+            $("#orderacceptError").css('color','red');
+            orderAccept=false;
+          }
+          else{
+            alert(val);
+            $("#orderacceptError").hide();
+            orderAccept=true;
+            
+          }
+          return orderAccept;
+
+            }
+           
+            function orderMethod(){
+                var val=$("#ordermethod").val();
+          if(val==''){
+            $("#ordermethodError").show();
+            
+            $("#ordermethodError").html('could not be blank');
+            $("#ordermethodError").css('color','red');
+            ordermethod=false;
+          }
+          else{
+            alert(val);
+            $("#ordermethodError").hide();
+            ordermethod=true;
+            
+          }
+          return ordermethod;
+
+            }
+            function orderCode(){
+                var val=$("#ordercode").val();
+          if(val==''){
+            $("#ordercodeError").show();
+            
+            $("#ordercodeError").html('could not be blank');
+            $("#ordercodeError").css('color','red');
+
+            ordercodeError=false;
+          }
+          else{
+            
+            $("#ordercodeError").hide();
+            ordercodeError=true;
+            
+          }
+          return ordercodeError;
+            }
+            
+        
+            function orderDecrp(){
+                var val=$("#orderdecrp").val();
+          if(val==''){
+           
+            $("#orderdecrpError").show();
+            
+            $("#orderdecrpError").html('could not be blank');
+            $("#orderdecrpError").css('color','red');
+
+            orderdecrp=false;
+          }
+          else{
+            
+           
+            $("#orderdecrpError").hide();
+            orderdecrp=true;
+            
+          }
+          return orderdecrp;
+            }
+        
+
+        
+            
+
+        $('[name="order_Mode"]').click(function(){
+            orderMode();
+             })
+
+             $("#ordermethod").change(function(){
+                orderMethod();
+             })
+             $("#ordercode").keyup(function(){
+                orderCode();
+             })
+             
+             $("#orderdecrp").keyup(function(){
+                orderDecrp();
+             })
+
+
+             $('[name="order_Accept"]').click(function(){
+                //var val=$('[name="order_Accept"]:checked').val();
+               // alert('next line'+val);
+                    orderMethodAccept();
+             })
+
+             $("#ordermethodform").submit(function(){
+                orderMode();
+                orderCode();
+                orderMethodAccept();
+                orderDecrp();
+                orderMethod();
+             
+
+                    if(ordermode==true&&ordermethod==true&&orderAccept==true&&ordercodeError==true&&
+                    orderdecrp==true
+                    ){
+                    return true;
+                    }
+                    else{
+                        return false;
+                    }
+            });
+        });
+           
+    </script>
+</body>
+</html>

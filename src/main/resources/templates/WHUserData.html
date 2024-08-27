@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ 
+</head>
+<body>
+    <div class="container">                                                                                                                                                                                  
+    <div class="card">
+        <div class="card-header bg-primary text-center">
+            <h1>WHUser Data</h1>
+    </div>    
+    <div class="card-body">
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+      
+         <th>UserId</th>
+         <th>UserType</th>
+         <th>UserCode</th>
+         <th>UserFor</th>
+         <th>UserEmail</th>
+         <th>UserCont</th>
+         <th>UserIdType</th>
+         <th>UserIfOther</th>
+         <th>UserIdNumber</th>
+         <th>Operations</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="user:${whUserTypelist}"> <!--- -->
+<td th:text="${user.usr_Id}"></td>
+<td th:text="${user.usr_Type}"></td>
+<td th:text="${user.usr_Code}"></td>
+<td th:text="${user.usr_For}"></td>
+<td th:text="${user.usr_Email}"></td>
+<td th:text="${user.usr_Cont}"></td>
+<td th:text="${user.usr_Id_Type}"></td>
+<td th:text="${user.usr_If_Other}"></td>
+<td th:text="${user.usr_Id_Number}"></td>
+<td><a th:href="@{/user/delete?id={data} (data=${user.usr_Id})}" class="btn btn-success">Delete</a>
+</td>
+<td><a th:href="@{/user/edit?id={data} (data=${user.usr_Id})}" class="btn btn-success">Edit</a>
+</td>
+</tr>
+      
+</tbody>
+     <!--<a th:href="@{'/category/edit/' + ${category.id}}">view</a> -->      
+        </table>
+    </div>
+    <div class="card-footer bg-primary text-center" >
+    <span th:text="${deleteByWhUserId}"> </span>
+  
+    </div>
+    
+    </div>
+    </div>
+</body>
+</html>

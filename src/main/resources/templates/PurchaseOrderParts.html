@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<title>Page Title</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+	<div class=" container">
+		<div class="card">
+			<div class="card-header bg-primary text-center">
+				<h1>Purchase Order Parts Screen(2)</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped table-dark">
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th th:text="${purchaseOrder.orderCode}"
+								class="btn btn-secondary"></th>
+							<th>status</th>
+							<th th:text="${purchaseOrder.status}" class="btn btn-secondary"></th>
+
+						</tr>
+
+					</thead>
+
+					</tbody>
+
+
+
+					<!--<a th:href="@{'/category/edit/' + ${category.id}}">view</a> -->
+				</table>
+			
+			<hr>
+	<div th:if="${purchaseOrder.status=='PICKING'||purchaseOrder.status=='OPEN'}">
+			<form th:action="@{/order/add}" method="post"
+				th:object="${purchasedtl}">
+				<div class="row">
+					<div class="col-1">Parts</div>
+					<div class="col-3">
+						<select th:field="*{part.partId}" id="part">
+							<option th:each="prt:${parts}" th:value="${prt.key}"
+								th:text="${prt.value}"></option>
+
+						</select>
+					</div>
+					<div class="col-1">Parts Qty</div>
+					<div class="col-3">
+						<input type="text" th:field="*{Qty}" id="qty" class="form-control">
+					</div>
+					<div class="col-2">
+						<input type="hidden" name="order.id"
+							th:value="${purchaseOrder.id}" class="btn btn-success" />
+					</div>
+					<div class=col-2>
+						<input type="submit" value="Add" class="btn btn-success" />
+					</div>
+
+
+				</div>
+
+
+
+		
+			</form>
+			</div>
+			<hr>
+			<table class="table table-striped  table-dark">
+				<thead>
+					<tr>
+						<td>Sr NO</td>
+						<td>Item</td>
+						<td>Base Cost</td>
+						<td>Qty</td>
+						<td th:if="${purchaseOrder.status=='ORDERED'}">Operations</td>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="dtl,i:${pchasedtl}">
+						<td th:text="${i.count}"></td>
+						<td th:text="${dtl.part.partCode}"></td>
+						<td th:text="${dtl.part.partCost}"></td>
+						<td th:text="${dtl.Qty}"></td>
+						<td th:if="${purchaseOrder.status=='PICKING'||purchaseOrder.status=='OPEN'}"><a
+							th:href="@{/order/removepart?id={dtlid}&orderid={ordid}(dtlid=${dtl.id},ordid=${purchaseOrder.id})}"
+							class="btn btn-danger">Remove</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="align-center" th:if="${purchaseOrder.status=='PICKING'}">
+				
+			<a th:href="@{/order/confirmorder?orderid={id}(id=${purchaseOrder.id})}" class="btn btn-success">PLace Order</a>
+			</div>
+	      </div>
+	</div>
+	</div>
+	
+</body> 
+</html>
+
+
+
+
+

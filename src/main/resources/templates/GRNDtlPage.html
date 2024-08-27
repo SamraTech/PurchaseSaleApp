@@ -1,0 +1,78 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+<script src='main.js'></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h1>Grn Data Page</h1>
+			</div>
+			<table>
+					<thead>
+						<tr>
+							<th>Grn Code</th>
+							<th th:text="${grn.grn_Code}" class="btn btn-info"></th>
+							<th>Order(PO-Code)</th>
+							<th th:text="${grn.order.orderCode}" class="btn btn-info"></th>
+							</tr>
+							</thead>
+							</table>
+			
+			<div class="card-body">
+				<table class="table table-striped table-dark table-hover">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>ItemCode</th>
+							<th>BaseCost</th>
+							<th>Qty</th>
+							<th>Item Val</th>
+							
+							<th colspan="2">Operations</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="grndtl:${grnDtls}">
+							<!--- -->
+							<td th:text="${grndtl.id}"></td>
+							<td th:text="${grndtl.itemcode}"></td>
+							<td th:text="${grndtl.baseCost}"></td>
+								<td th:text="${grndtl.qty}"></td>
+								<td th:text="${grndtl.itemval}"></td>
+							<td th:if="${grndtl.status==null}"><a
+								th:href="@{/grn/updatestatus?grnid={grnId}&grndtlid={grndtlId}&status=Accepted (grnId=${grn.id},grndtlId=${grndtl.id})}"
+								class="btn btn-info">Accept</a>&nbsp;
+								<a
+								th:href="@{/grn/updatestatus?grnid={grnId}&grndtlid={grndtlId}&status=Rejected (grnId=${grn.id},grndtlId=${grndtl.id})}"class="btn btn-info">Reject</a>
+								</td>
+								<td>
+								<span th:if="${grndtl.status!=null}" th:text="${grndtl.status}" class="btn btn-danger"></span>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<div class="card-footer bg-white">
+				<span class=" bg-primary text-white text-center"></span>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+<script src='main.js'></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-white text-center">
+				<h1>Uom Register Page</h1>
+			</div>
+
+
+			<div class="card-body">
+				<form action="/uom/save" method="post" id="uomRegForm">
+					<div class="row">
+						<div class="col-2">Uom Type</div>
+						<div class="col-5">
+							<select name="uom_Type" id="uom_Type">
+								<option value="select">select</option>
+								<option value="Packing">Packing</option>
+								<option value="Not Packing">Not Packing</option>
+								<option value="Na">Na</option>
+							</select>
+						</div>
+						<div class="col-5">
+							<span id="uom_eorror">Error</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">Uom Id</div>
+						<div class="col-5">
+							<input type="text" name="uom_Id" th:value="${uombyId.uom_Id}" id="uom_Id"
+								class="form-control">
+						</div>
+						
+					</div>
+					
+					<div class="row">
+						<div class="col-2">Uom Model</div>
+						<div class="col-5">
+							<input type="text" name="uom_Model" th:value="${uombyId.uom_Model}" id="uom_Model"
+								class="form-control">
+						</div>
+						<div class="col-5">
+							<span id="uommodel_eorror">Error</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">Uom Decrp</div>
+						<div class="col-5">
+							<input type="text" name="uom_Decrp"  th:value="${uombyId.uom_Decrp}" id="uom_Decrp"
+								class="form-control">
+						</div>
+						<div class="col-5">
+							<span id="uomdecrperror">Error</span>
+						</div>
+					</div>
+
+					<input type="submit" value="Submit" class="btn btn-success" />
+
+				</form>
+
+			</div>
+
+			<div class="card-footer bg-white" th:if="${saveUom!=null}">
+				<span class=" bg-primary text-white text-center"
+					th:text="${saveUom}"></span>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#uom_eorror").hide();
+		$("#uommodel_eorror").hide();
+		$("#uomdecrperror").hide();
+		var uomtype_error = false;
+		var uommodel_error = false;
+		var uomDcrp_error = false;
+
+		$(document).ready(
+				
+				
+				function() {
+					function uomTypecheck() {
+						var val = $("#uom_Type").val();
+						if (val == 'select') {
+							$("#uom_eorror").show();
+							$("#uom_eorror").css('color', 'red');
+							$("#uom_eorror").html('could not be blank');
+
+							uomtype_error = false;
+						} else {
+							$("#uom_eorror").hide();
+							uomtype_error = true;
+						}
+						return uomtype_error;
+					}
+					function uomModelcheck() {
+						var val = $("#uom_Model").val();
+						if (val == '') {
+							$("#uommodel_eorror").show();
+							$("#uommodel_eorror").css('color', 'red');
+							$("#uommodel_eorror").html('could not be blank');
+							uommodel_error = false;
+							;
+						} else
+
+						{
+							var id=0;
+							if($("#uom_Id").val()!==undefined){
+							id=$("#uom_Id").val();	
+							}
+							
+							$.ajax({
+								type : "GET",
+								url : 'validate',
+								data : {
+									'uommodel' : val,
+									'id':id
+								},
+								success : function(responsedata) {
+
+									if (responsedata == '') {
+										$("#uommodel_eorror").hide();
+										uommodel_error = true;
+
+									} else {
+
+										$("#uommodel_eorror").show();
+										$("#uommodel_eorror").css('color',
+												'red');
+										$("#uommodel_eorror")
+												.html(responsedata);
+
+										uommodel_error = false;
+									}
+								}
+
+							})
+
+						}
+						return uommodel_error;
+
+					}
+					function uomDcrp() {
+						var val = $("#uom_Decrp").val();
+						if (val == '') {
+							$("#uomdecrperror").show();
+							$("#uomdecrperror").css('color', 'red');
+							$("#uomdecrperror").html('could not be blank');
+
+							uomDcrp_error = false;
+						} else {
+							$("#uomdecrperror").hide();
+							uomDcrp_error = true;
+						}
+						return uomDcrp_error;
+					}
+
+					$("#uom_Type").change(function() {
+						uomTypecheck();
+
+					})
+					$("#uom_Model").keyup(function() {
+						uomModelcheck();
+					})
+
+					$("#uom_Decrp").keyup(function() {
+						uomDcrp();
+					})
+					//  $("#submitform").click(function(){
+					//    submitform();})
+					$("#uomRegForm").submit(
+							function() {
+
+								uomModelcheck();
+								uomTypecheck();
+								uomDcrp();
+
+								if (uomtype_error == true
+										&& uommodel_error == true
+										&& uomDcrp_error == true) {
+									return true;
+								} else {
+									return false;
+								}
+
+							})
+
+				});
+	</script>
+</body>
+
+</html>

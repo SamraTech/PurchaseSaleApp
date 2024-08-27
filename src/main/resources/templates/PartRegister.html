@@ -1,0 +1,201 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>Page Title</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary  text-center">
+				<h1>Part Register Page</h1>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/part/save}" method="post" id="partRegForm"
+					th:object="${part}">
+					<div class="row">
+						<div class="col-2">
+					<label>Part Code</label>
+						</div>
+						<div class="col-5">
+							<input type="text" th:field="*{partCode}" id="part_Code"
+								class="form-control" />
+						</div>
+						<div class="col-5">
+							<span id="partcodeError">Error</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">
+							<label>Part Dimensions</label>
+						</div>
+						<div class="col-5">
+							Length:<input type="number" th:field="*{partLen}" id="part_Len"
+								class="form-control" /> Width:<input type="number"
+								th:field="*{partWid}" id="part_Wid" class="form-control" />
+							Height:<input type="number" th:field="*{partHght}" id="part_Hght"
+								class="form-control" />
+						</div>
+						<div class="col-5">
+							<span id="partdimenError">Error</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">
+							<label>Part Cost</label>
+						</div>
+						<div class="col-5">
+							<input type="text" th:field="*{partCost}" id="part_Cost"
+								class="form-control" />
+						</div>
+						<div class="col-5">
+							<span id="partcostError">Error</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-2">
+							<label>Part Currency</label>
+						</div>
+						<div class="col-5">
+							<select th:field="*{partCurrency}" id="part_Currency">
+								<option value="select">select</option>
+								<option value="RS">RS</option>
+								<option value="USD">USD</option>
+								<option value="Aus">Aus</option>
+							</select>
+						</div>
+						<div class="col-5">
+							<span id="partCurrencyError">Error</span>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-2">
+								<label>Uom Model</label>
+							</div>
+							<div class="col-5">
+								<select th:field="*{uomType.uom_Id}" id="uom_Part">
+								<option th:each="model:${uommodel}" 
+								th:value="${model.key}" th:text="${model.value}"></option>		
+									 
+									
+									
+								</select>
+							</div>
+							<div class="col-5">
+								<span id="uompartError">Error</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-2">
+								<label>Order Method Sale</label>
+							</div>
+							<div class="col-5" id="orderSal_part">
+							
+								
+								<select th:field="*{ordermethod.order_method_Id}" id="orders_Part">
+								
+								<option th:each="ord:${ordermethodsale}" 
+								th:value="${ord.key}" th:text="${ord.value}"></option>		
+									 
+									
+									
+								</select>
+							</div>
+							<div class="col-5">
+								<span id="orderpartError">Error</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-2">
+								<label>Order Method Purchase</label>
+							</div>
+							<div class="col-5" id="orderPur_part">
+								<select th:field="*{ordermethod.order_method_Id}" id="orderp_Part">
+								
+								<option th:each="ordr:${ordermethodpurchase}" 
+								th:value="${ordr.key}" th:text="${ordr.value}"></option>		
+									 
+									
+									
+								</select>
+							</div>
+							<div class="col-5">
+								<span id="orderpartError">Error</span>
+							</div>
+						</div>
+						
+						
+					
+					<input type="submit" value="submit" class="btn btn-success" />
+
+				</form>
+			</div>
+			<div class="card-footer alert alert-info">
+				<span th:text="${part}"></span> <span th:text="${uommodel}"></span>
+			 <span th:text="${ordermethodsale}"></span>
+			 <span th:text="${ordermethodpurchase}"></span>
+			
+			</div>
+
+
+
+
+		</div>
+
+
+	
+
+	</div>
+	<script>
+	  $(document).ready(function(){
+
+          function showSaleDrop(){
+          
+           if( $("#orders_Part").val()!='select'){
+               $("#orderPur_part").hide(); 
+           }
+          
+            else{
+               $("#orderPur_part").show();
+            }
+
+           }
+           function showPurchaseDrop(){
+              
+           if ($("#orderp_Part").val()!='select'){
+               
+               $("#orderSal_part").hide(); 
+              
+           }
+          
+            else{
+               $("#orderSal_part").show();
+            }
+
+           }
+       
+     
+    $("#orders_Part").change(function(){
+       
+        showSaleDrop();
+       
+    })
+    $("#orderp_Part").change(function(){
+     
+        showPurchaseDrop();
+       
+    })
+	  });
+	</script>
+</body>
+</html>

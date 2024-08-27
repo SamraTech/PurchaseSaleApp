@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+<title>Page Title</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header bg-primary text-center">
+				<h1>Sale Order Data Page</h1>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped table-dark table-hover">
+					<thead>
+						<tr>
+
+							<th>ID</th>
+							<th>Code</th>
+							<th>Status</th>
+							<th>Shipment</th>
+							<th>Customer</th>
+							<th colspan="2">Operations</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="saleorder:${saleorder}">
+							<!--- -->
+							<td th:text="${saleorder.id}"></td>
+							<td th:text="${saleorder.orderCode}"></td>
+							<td th:text="${saleorder.status}"></td>
+							<td th:text="${saleorder.shipment.shpmnt_Code}"></td>
+                            <td th:text="${saleorder.user.usr_Code}"></td>
+							  <td><a th:href="@{/saleorder/addparts?id={saleid}(saleid=${saleorder.id})}" class="btn btn-primary">Add parts</a>&nbsp;&nbsp;
+							 </td>
+							 <td th:if="${saleorder.status=='SALE-CONFIRM'}">
+							  <a th:href="@{/saleorder/invoice?id={saleid}(saleid=${saleorder.id})}" class="btn btn-primary">Generate Invoice</a> 
+							  </td>
+							  <td th:if="${saleorder.status=='SALE-INVOICE'}"><a th:href="@{/saleorder/printinvoice?id={saleid}(saleid=${saleorder.id})}" class="btn btn-info">Print Invoice</a> 
+							 </td>
+						</tr>
+
+					</tbody>
+					<!--<a th:href="@{'/category/edit/' + ${category.id}}">view</a> -->
+				</table>
+			</div>
+			<div class="card-footer bg-primary text-center">
+				<span> </span>
+
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

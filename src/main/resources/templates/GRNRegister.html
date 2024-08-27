@@ -1,0 +1,166 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body style="background-color: cadetblue;">
+    <div class="container" style="background-color: aqua;"> 
+   <div class="card" style="background-color:aquamarine">
+    <div class="card-header bg-primary text-white text-center"><h1>GRN Register Page</h1></div>
+    
+
+<div class="card-body">
+ <form action="/grn/save" method="post" id="grnRegForm" th:object="${grn}">
+    <div class="row">
+        <div class="col-2">order</div>
+        <div class="col-5">
+            <select th:field=*{order.id} id="grnorderid">
+                <option  th:each="ord:${idcode}" th:value="${ord.key}" th:text="${ord.value}"></option>
+                
+                </select>
+        </div>
+        <div class="col-5">
+            <span id="grnorder_eorror">Error</span>
+                </div>
+            </div>
+    <div class="row">
+        <div class="col-2">GRN Code</div>
+        <div class="col-5">
+        <input type="text" th:field=*{grn_Code} id="grn_Code" class="form-control">
+        </div>
+            <div class="col-5">
+                <span id="grn_Code_eorror">Error</span>
+                    </div>
+                </div>
+     
+             <div class="row">
+                <div class="col-2"> GRN Type</div>
+                <div class="col-5">
+            <input type="text" th:field=*{grn_Type} id="grn_Type" class="form-control">
+                </div>
+                <div class="col-5">
+                    <span id="grn_Typeerror">Error</span>
+                </div>
+            </div>
+      <div class="row">
+                <div class="col-2"> GRN Dscrp</div>
+                <div class="col-5">
+            <input type="text" th:field=*{grn_Descrp} id="grn_Descrp" class="form-control">
+                </div>
+                <div class="col-5">
+                    <span id="grn_Descrpperror">Error</span>
+                </div>
+            </div>
+       
+              
+    <input type="submit"  value="Submit" class="btn btn-success"/>
+   
+    </form>
+    
+    </div>
+    
+    <div class="card-footer bg-white">
+        <span class=" bg-primary text-white text-center"></span>
+    </div>
+</div>
+    </div>  
+     <script  type="text/javascript">
+         $("#uom_eorror").hide();
+         $("#uommodel_eorror").hide();
+         $("#uomdecrperror").hide();
+         var uomtype_error=false;
+        var  uommodel_error=false;
+        var uomDcrp_error=false;
+
+        $(document).ready(function(){
+            function uomTypecheck(){
+                var val=$("#uom_Type").val();
+           if(val=='select'){
+            $("#uom_eorror").show();
+            $("#uom_eorror").css('color','red');
+            $("#uom_eorror").html('could not be blank');
+           
+             uomtype_error=false;
+           }
+           else{ $("#uom_eorror").hide();
+             uomtype_error=true;
+           }
+           return uomtype_error;
+         } 
+         function uomModelcheck(){
+                var val=$("#uom_Model").val();
+           if(val==''){
+            $("#uommodel_eorror").show();
+            $("#uommodel_eorror").css('color','red');
+            $("#uommodel_eorror").html('could not be blank');
+            uommodel_error=false;
+           ;
+           }
+           else{ $("#uommodel_eorror").hide();
+             uommodel_error=true;
+           }
+           return uommodel_error;
+         } 
+         function uomDcrp(){
+                var val=$("#uom_Decrp").val();
+           if(val==''){
+            $("#uomdecrperror").show();
+            $("#uomdecrperror").css('color','red');
+            $("#uomdecrperror").html('could not be blank');
+            
+          uomDcrp_error=false;
+           }
+           else{ $("#uomdecrperror").hide();
+             uomDcrp_error=true;
+           }
+           return uomDcrp_error;
+         }
+           
+         
+
+           
+         
+         $("#uom_Type").change(function(){
+            uomTypecheck();
+           
+           
+        })
+        $("#uom_Model").keyup(function(){
+            uomModelcheck();})
+
+            $("#uom_Decrp").keyup(function(){
+                uomDcrp();})
+              //  $("#submitform").click(function(){
+                //    submitform();})
+                $("#uomRegForm").submit(function(){
+                    
+                    uomModelcheck();
+                    uomTypecheck();
+                    uomDcrp();
+                   
+                    if(uomtype_error==true&&uommodel_error==true&&
+                    uomDcrp_error==true
+                    ){
+                            return true;
+                    }
+                    else{
+                          return false;
+                    }
+                  
+                })
+
+               
+    
+    });
+        
+
+      
+     </script>
+</body>
+  
+</html>
