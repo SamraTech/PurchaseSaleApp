@@ -1,8 +1,9 @@
 package external.api.consume.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,12 +38,23 @@ public class ShipmentController {
 	 * }
 	 */
 	//web call all Shipment--------------------
+	/*
+	 * @GetMapping("/all") public String getShipment(Model model) {
+	 * 
+	 * List<Shipment> shipment = ser.getShipment();
+	 * System.out.println(shipment.get(0)); model.addAttribute("shipment",
+	 * shipment); return "ShipmentDataPage";
+	 * 
+	 * }
+	 */
+	
 	@GetMapping("/all")
-	public String getShipment(Model model) {
+	public String getShipment(@PageableDefault(page=0,size=3)Pageable page,Model model) {
 
-		List<Shipment> shipment = ser.getShipment();
-		System.out.println(shipment.get(0));
-		model.addAttribute("shipment", shipment);
+		Page<Shipment> pag= ser.getShipment(page);
+		//.out.println(shipment.get(0));
+		model.addAttribute("shipment", pag.getContent());
+		model.addAttribute("pag", pag);
 		return "ShipmentDataPage";
 
 	}

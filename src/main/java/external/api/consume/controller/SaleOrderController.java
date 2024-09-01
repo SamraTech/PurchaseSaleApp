@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import external.api.consume.CustomerInvoicePdf;
 import external.api.consume.model.SaleOrder;
 import external.api.consume.model.SaleOrderDtl;
 import external.api.consume.service.PartService;
@@ -112,7 +113,13 @@ public class SaleOrderController {
 	@GetMapping("/printinvoice")
 	public ModelAndView printInvoice(@RequestParam Integer id) {
 		ModelAndView view=new ModelAndView();
-		
+		SaleOrder saleOrderById = saleservice.getSaleOrderById(id);	
+		 List<SaleOrderDtl> saleOrderDtl = saleservice.getSaleOrderDtl(id);
+			
+			view.addObject("saleOrderDtl",saleOrderDtl);
+		//view.addAttribute("saleorder", saleOrderById);
+		view.addObject("saleOrderById", saleOrderById);
+		view.setView(new CustomerInvoicePdf());
 		return view;
 	}
 	

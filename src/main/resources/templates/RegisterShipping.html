@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+<script src='main.js'></script>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body style="background-color: cadetblue;">
+	<div class="container" style="background-color: aqua;">
+		<div class="card" style="background-color: aquamarine">
+			<div class="card-header bg-primary text-white text-center">
+				<h1>Shipping Register Page</h1>
+			</div>
+
+
+			<div class="card-body">
+				<form th:action="@{/shipping/save}" method="post" id="grnRegForm" th:object="${ship}">
+					<div class="row">
+						<div class="col-1">order</div>
+						<div class="col-3">
+							<select th:field="*{order.id}" id="shiporderid">
+								<option th:each="ord:${idcode}" th:value="${ord.key}"
+									th:text="${ord.value}"></option>
+
+							</select>
+						</div>
+						
+					</div>
+					<div class="row">
+						<div class="col-1">Shiping Code</div>
+						<div class="col-3">
+							<input type="text" th:field="*{shippingCode}" id="shippingCode"
+								class="form-control">
+						</div>&nbsp;&nbsp;&nbsp;
+						<div class="col-1"></div>
+						<div class="col-3">Bill To Add
+							<textarea th:field="*{billingToAdd}" id="billingToAdd"
+								class="form-control"></textarea>
+						</div>
+							
+						</div>
+						
+					
+
+					<div class="row">
+						<div class="col-1">shipping RefNum</div>
+						<div class="col-3">
+							<input type="text" th:field="*{shipRefNum}" id="shipRefNum"
+								class="form-control">
+						</div>
+						<div class="col-1"></div>
+						<div class="col-3">Shipping To Add
+							<textarea th:field="*{ShippingToAddress}" id="ShippingToAddress"
+								class="form-control"></textarea>
+
+					</div>
+					</div>
+					<div class="row">
+						<div class="col-1">Shipping Dscrp</div>
+						<div class="col-3">
+							<input type="text" th:field="*{description}" id="description"
+								class="form-control">
+						</div>
+						
+					</div>
+
+					<input type="submit" value="CreateShipping" class="btn btn-success" />
+						
+				</form>
+				
+			</div>
+			
+
+			<div class="card-footer bg-white">
+				<span class=" bg-primary  text-white text-center"></span>
+			</div>
+			
+		</div>
+		</div>
+	</body>
+
+</html>

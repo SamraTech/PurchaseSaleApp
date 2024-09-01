@@ -1,16 +1,18 @@
 package external.api.consume.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import external.api.consume.model.Part;
 import external.api.consume.model.SaleOrder;
 import external.api.consume.model.SaleOrderDtl;
+import external.api.consume.model.Shipping;
 import external.api.consume.repository.SaleOrderDtlRepository;
 import external.api.consume.repository.SaleOrderRepository;
 
@@ -74,5 +76,14 @@ public class SaleOrderService {
 	
 	return countdtl;
 	}
+	public Map<Integer,String> getIdAndCode(String status){
+		List<Object[]> idAndCode = repository.getIdAndCode(status);
+		Map<Integer, String> idcode = idAndCode.stream().collect(Collectors.toMap(obj->(Integer.valueOf(obj[0].toString())),obj->obj[1].toString()));
+		//System.out.println(idcode.get(0));
+		
+		return idcode;
+	}
+
+
 
 }

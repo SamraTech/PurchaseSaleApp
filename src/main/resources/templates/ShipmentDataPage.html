@@ -13,7 +13,7 @@
     <div class="container">
     <div class="card">
         <div class="card-header bg-primary text-center">
-            <h1>Part Data </h1>
+            <h1>Shipment Data </h1>
     </div>    
     <div class="card-body">
         <table class="table table-striped table-dark table-hover">
@@ -47,6 +47,16 @@
            
         </table>
     </div>
+    <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li th:if="${pag.hasPrevious()}"class="page-item"><a class="page-link" th:href="@{/ship/all(page=${pag.number-1})}">Previous</a></li>
+   <th:block th:each="i,ac:${#numbers.sequence(0,pag.totalPages-1)}">
+    <li th:class="${ac.index==pag.number?'page-item active':'page-item'}"><a class="page-link" th:href="@{/ship/all(page=${i})}">[[${i+1}]]</a></li>
+   
+   </th:block>
+     <li th:if="${pag.hasNext()}" class="page-item"><a class="page-link" th:href="@{/ship/all(page=${pag.number+1})}">Next</a></li>
+  </ul>
+</nav>
     </div>
     </div>
 </body>

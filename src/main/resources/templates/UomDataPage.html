@@ -17,7 +17,18 @@
 			<div class="card-header bg-primary text-white text-center">
 				<h1>Uom  Data Page</h1>
 			</div>
-
+			<hr/>
+				<form action="all" method="get">
+				<div class="row">
+				<div class="col-3">
+				
+				<input type="text" name="uom_Model" placeholder="enter model here" class="form-control">
+				</div>
+				<div class="col-2">
+				<input type="submit" value="Search" class=" btn btn-info form-control">
+				</div>
+				</div>
+				</form>
 
 			<div class="card-body">
 				<table class="table table-striped table-dark table-hover">
@@ -57,6 +68,20 @@
 			<div class="card-footer bg-white">
 				<span class=" bg-primary text-white text-center"></span>
 			</div>
+			<nav aria-label="Page navigation example">
+  <ul class="pagination" >
+   <li th:if="${page.hasPrevious()}"class="page-item"><a class="page-link" th:href="@{/uom/all(page=${page.number-1})}">Previous</a></li>
+    
+  <th:block th:each="i,ac:${#numbers.sequence(0,page.totalPages-1)}">
+   <li th:class="${ac.index==page.number?'page-item active':'page-item'}">
+   <a class="page-link" th:href="@{/uom/all?page={data}(data=${i})}">[[${i+1}]]
+   </a>
+   </li>
+   
+    </th:block>
+     <li  th:if="${page.hasNext()}" class="page-item"><a class="page-link" th:href="@{/uom/all(page=${page.number+1})}">Next</a></li>
+  </ul>
+</nav>
 		</div>
 	</div>
 	<script type="text/javascript">

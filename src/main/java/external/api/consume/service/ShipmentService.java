@@ -1,12 +1,13 @@
 package external.api.consume.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import external.api.consume.model.Shipment;
@@ -18,8 +19,8 @@ public class ShipmentService {
 	private ShipmentRepo repo;
 	
 
-	public List<Shipment> getShipment() {
-		return repo.findAll();
+	public Page<Shipment> getShipment(Pageable page) {
+		return repo.findAll(page);
 
 	}
 
@@ -76,5 +77,13 @@ public class ShipmentService {
 		return mp;
 	
 	}
+	
+	
+	
+	
+	/*
+	 * public List<Shipment> getShipment(Pageable page) { // TODO Auto-generated
+	 * method stub return null; }
+	 */
 		
 	}
